@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
 }
 
 android {
@@ -33,6 +34,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+
 }
 
 dependencies {
@@ -44,4 +50,10 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // add lifecycle dependencies here
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+
 }
