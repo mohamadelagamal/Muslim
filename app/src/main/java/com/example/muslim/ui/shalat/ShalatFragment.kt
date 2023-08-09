@@ -6,17 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.muslim.R
-class ShalatFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+import com.example.muslim.databinding.FragmentShalatBinding
+import com.example.muslim.ui.base.fragment.BaseFragment
+
+class ShalatFragment : BaseFragment<FragmentShalatBinding,ShalatViewModel>(), Navigator {
+    override fun getLayoutID(): Int {
+        return R.layout.fragment_shalat
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shalat, container, false)
+    override fun makeViewModelProvider(): ShalatViewModel {
+        return ShalatViewModel()
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewDataBinding.vmShalat=viewModel
+        viewModel.navigator=this
+
+    }
+
 
 }

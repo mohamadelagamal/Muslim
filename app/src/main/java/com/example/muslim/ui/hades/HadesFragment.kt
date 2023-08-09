@@ -6,20 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.muslim.R
+import com.example.muslim.databinding.FragmentHadesBinding
+import com.example.muslim.ui.base.fragment.BaseFragment
 
-class HadesFragment : Fragment() {
+class HadesFragment : BaseFragment<FragmentHadesBinding,HadesViewModel>(),Navigator {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
+    override fun getLayoutID(): Int {
+        return R.layout.fragment_hades
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hades, container, false)
+    override fun makeViewModelProvider(): HadesViewModel {
+        return HadesViewModel()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewDataBinding.vmHades=viewModel
+        viewModel.navigator=this
+
+    }
 }

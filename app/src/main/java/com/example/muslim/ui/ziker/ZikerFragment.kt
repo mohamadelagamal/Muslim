@@ -6,19 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.muslim.R
+import com.example.muslim.databinding.FragmentZikerBinding
+import com.example.muslim.ui.base.fragment.BaseFragment
 
-class ZikerFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class ZikerFragment : BaseFragment<FragmentZikerBinding,ZikerViewModel>() , Navigator{
+    override fun getLayoutID(): Int {
+        return R.layout.fragment_ziker
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ziker, container, false)
+    override fun makeViewModelProvider(): ZikerViewModel {
+        return ZikerViewModel()
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewDataBinding.vmZiker=viewModel
+        viewModel.navigator=this
+
+    }
+
 
 }

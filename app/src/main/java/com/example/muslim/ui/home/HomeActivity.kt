@@ -60,6 +60,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(),Navigato
             return@OnItemSelectedListener true
         }
         viewDataBinding.fab.setOnClickListener {
+            viewDataBinding.bottomNavigationView.uncheckAllItems()
             transactFragment(ShalatFragment())
         }
 
