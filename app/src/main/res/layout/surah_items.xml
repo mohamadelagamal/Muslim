@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+          <variable
+              name="item"
+              type="com.example.muslim.model.SurahInfoItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+        <TextView
+            android:id="@+id/indexTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            tools:text="1"
+            android:text="@{item.index}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".6" />
+
+        <TextView
+            android:id="@+id/surahNameARTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:fontFamily="@font/al_qalam"
+           tools:text="الفاتحة"
+            android:text="@{item.titleAr}"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".4" />
+
+        <TextView
+            android:id="@+id/surahNameENTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto"
+            tools:text="Al-Fatiha"
+            android:text="@{item.title}"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/indexTV"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".4" />
+
+        <TextView
+            android:id="@+id/surahType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="@font/roboto"
+            tools:text="Makkiyah"
+            android:text="@{item.type}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/indexTV"
+            app:layout_constraintTop_toBottomOf="@+id/surahNameENTV" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:background="@color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="@id/surahType"
+            app:layout_constraintEnd_toStartOf="@id/totalVerse"
+            app:layout_constraintStart_toEndOf="@id/surahType"
+            app:layout_constraintTop_toTopOf="@id/surahType" />
+
+
+        <TextView
+            android:id="@+id/totalVerse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="@font/roboto"
+            tools:text="Verses :7"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/surahType"
+            app:layout_constraintTop_toBottomOf="@+id/surahNameENTV" />
+
+
+        <TextView
+            android:id="@+id/place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="@font/roboto"
+            android:text="Place :Madina"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/totalVerse"
+            app:layout_constraintTop_toBottomOf="@+id/surahNameENTV" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:background="@color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="@id/surahType"
+            app:layout_constraintEnd_toStartOf="@id/place"
+            app:layout_constraintStart_toEndOf="@id/totalVerse"
+            app:layout_constraintTop_toTopOf="@id/surahType" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
