@@ -1,4 +1,4 @@
-    plugins {
+plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 
@@ -55,7 +55,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
-    //Gson
-    implementation ("com.google.code.gson:gson:2.9.1")
 
 }
