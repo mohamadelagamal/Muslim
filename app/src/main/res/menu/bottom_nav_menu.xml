@@ -13,7 +13,7 @@
         android:title="" />
 
     <item android:id="@+id/hadesNav"
-        android:title="@string/hades"
+        android:title="@string/hadith"
         android:icon="@drawable/hades" />
 
     <item android:id="@+id/radioNav"

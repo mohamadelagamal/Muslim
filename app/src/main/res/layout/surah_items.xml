@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="14dp"
-            android:fontFamily="@font/al_qalam"
+            android:fontFamily="@font/me_quran"
            tools:text="الفاتحة"
             android:text="@{item.titleAr}"
             android:textColor="@color/black"

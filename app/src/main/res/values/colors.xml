@@ -7,4 +7,5 @@
     <color name="darker_gray">#AAAAAA</color>
     <color name="page_bg">#EBF7FB</color>
     <color name="transparent">#00000000</color>
+    <color name="divider">#eeeeee</color>
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="itemHades"
             type="com.example.muslim.database.HadesData" />
@@ -13,68 +14,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="20dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardMaxElevation="12dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true"
-
-                >
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toTopOf="parent">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    >
-                    <View
-                    android:layout_width="25dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/img"
-                    android:contentDescription="@string/app_name"
-                    android:background="@color/color_light"
-                    />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/me_quran"
+                android:padding="8dp"
+                android:text="@{itemHades.title}"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                tools:text="Title" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{itemHades.title}"
-                            android:layout_gravity="start"
-                            android:gravity="start"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            tools:text="Hades Title"
-                            android:textColor="@color/black"
-                            android:padding="15dp"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{itemHades.description}"
-                            android:layout_marginHorizontal="15dp"
-                            android:layout_gravity="start"
-                            android:textSize="20sp"
-                            tools:text="Hades description"
 
-                            />
-                    </LinearLayout>
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
