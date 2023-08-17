@@ -6,7 +6,7 @@
     <data>
           <variable
               name="item"
-              type="com.example.muslim.model.SurahInfoItem" />
+              type="com.example.muslim.model.quran.SurahInfoItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,15 +32,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="14dp"
-            android:fontFamily="@font/me_quran"
-           tools:text="الفاتحة"
+            android:fontFamily="@font/abril_fatface"
             android:text="@{item.titleAr}"
             android:textColor="@color/black"
             android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".4" />
+            app:layout_constraintVertical_bias=".4"
+            tools:text="الفاتحة" />
 
         <TextView
             android:id="@+id/surahNameENTV"

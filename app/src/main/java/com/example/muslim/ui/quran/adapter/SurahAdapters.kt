@@ -1,4 +1,4 @@
-package com.example.muslim.ui.quran.surah
+package com.example.muslim.ui.quran.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.muslim.R
-import com.example.muslim.databinding.SurahItemsBinding
-import com.example.muslim.model.SurahInfoItem
+import com.example.muslim.databinding.ItemsSurahBinding
+import com.example.muslim.model.quran.SurahInfoItem
 
 class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.viewholder>(){
 
-    class viewholder(val itemsBinding: SurahItemsBinding):ViewHolder(itemsBinding.root){
+    class viewholder(val itemsBinding: ItemsSurahBinding):ViewHolder(itemsBinding.root){
       fun bind(item:SurahInfoItem?){
           itemsBinding.item=item
           itemsBinding.invalidateAll()
@@ -19,8 +19,8 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewholder {
-       val viewBinding:SurahItemsBinding=DataBindingUtil
-           .inflate(LayoutInflater.from(parent.context), R.layout.surah_items,parent,false)
+       val viewBinding:ItemsSurahBinding=DataBindingUtil
+           .inflate(LayoutInflater.from(parent.context), R.layout.items_surah,parent,false)
         return viewholder(viewBinding)
     }
 
@@ -31,9 +31,22 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
         holder.bind(item)
         holder.itemsBinding.totalVerse.text="Verses :${list!![position]?.count.toString().trimStart('0')}"
         holder.itemsBinding.place.text= "Place :${list!![position]?.place}"
+
+        onItemClickListener?.let {
+            holder.itemView.setOnClickListener {
+                // position this is number in onBindViewHolder and items[position] this number in list
+                onItemClickListener?.onItemClick(item!!.index)
+
+            }
+        }
     }
     fun changeData(newList:List<SurahInfoItem>){
        list=newList
         notifyDataSetChanged()
+    }
+
+    var onItemClickListener:OnItemClickListener?=null
+    interface OnItemClickListener{
+        fun onItemClick(item:String)
     }
 }

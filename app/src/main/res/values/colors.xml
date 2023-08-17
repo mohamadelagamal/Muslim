@@ -8,4 +8,5 @@
     <color name="page_bg">#EBF7FB</color>
     <color name="transparent">#00000000</color>
     <color name="divider">#eeeeee</color>
+    <color name="shimmer">#DDDDDD</color>
 </resources>

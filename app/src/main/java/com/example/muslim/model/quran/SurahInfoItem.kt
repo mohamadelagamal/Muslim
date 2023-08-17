@@ -1,4 +1,4 @@
-package com.example.muslim.database
+package com.example.muslim.model.quran
 
 data class SurahInfoItem(
     val count: Int,

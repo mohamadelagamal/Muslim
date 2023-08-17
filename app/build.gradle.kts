@@ -1,6 +1,11 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    // navigation safe args plugin
+    id("androidx.navigation.safeargs.kotlin")
+    // kapt plugin
 
 }
 
@@ -43,7 +48,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -55,5 +60,21 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    // add gson dependencies here to parse json
+    implementation("com.google.code.gson:gson:2.8.8")
+    // add navigation components dependencies here
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
+
+    // shared preferences
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("com.airbnb.android:lottie:4.2.0")// to use lottie animation in the app
+    // swipe refresh layout dependency
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    //Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
+    // Room dependencies here
+
+
 
 }

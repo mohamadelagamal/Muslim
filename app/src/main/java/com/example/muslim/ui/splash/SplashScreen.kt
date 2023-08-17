@@ -4,21 +4,23 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.view.Window
-import android.view.WindowManager
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.muslim.R
 import com.example.muslim.ui.home.HomeActivity
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        val anim = AnimationUtils.loadAnimation(this, R.anim.animation_splash)
 
+        val image = findViewById(R.id.iv_splash) as ImageView
+        image.startAnimation(anim)
         val typingText = findViewById<TextView>(R.id.tv_splash)
 
         Handler().postDelayed({ typingText.setText("M") }, 800)

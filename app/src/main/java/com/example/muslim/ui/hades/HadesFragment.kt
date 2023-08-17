@@ -1,12 +1,9 @@
 package com.example.muslim.ui.hades
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.example.muslim.R
-import com.example.muslim.database.HadesData
+import com.example.muslim.model.hadith.HadithDataBase
 import com.example.muslim.databinding.FragmentHadesBinding
 import com.example.muslim.ui.base.fragment.BaseFragment
 import com.example.muslim.ui.hades.adapter.HadesAdapter
@@ -14,31 +11,31 @@ import com.example.muslim.ui.hades.adapter.HadesAdapter
 class HadesFragment : BaseFragment<FragmentHadesBinding, HadesViewModel>(), Navigator {
 
     val list = listOf(
-        HadesData(
+        HadithDataBase(
             "صحيح البخاري",
         ),
-        HadesData(
+        HadithDataBase(
             "صحيح مسلم ",
         ),
-        HadesData(
+        HadithDataBase(
             "سنن النسائي",
         ),
-        HadesData(
+        HadithDataBase(
             "سنن أبي داود",
         ),
-        HadesData(
+        HadithDataBase(
             "سنن الترمذي",
         ),
-        HadesData(
+        HadithDataBase(
             "سنن ابن ماجه",
         ),
-        HadesData(
+        HadithDataBase(
             "موطأ مالك ",
         ),
-        HadesData(
+        HadithDataBase(
             "سنن الدارمي",
         ),
-        HadesData(
+        HadithDataBase(
             "مسند أحمد",
         ),
     )

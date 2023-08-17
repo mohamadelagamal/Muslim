@@ -7,7 +7,7 @@
 
         <variable
             name="itemHades"
-            type="com.example.muslim.database.HadesData" />
+            type="com.example.muslim.model.hadith.HadithDataBase" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

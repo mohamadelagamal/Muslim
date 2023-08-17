@@ -1,4 +1,4 @@
-package com.example.muslim.database
+package com.example.muslim.model.quran
 
 data class Verse(
     val end: String,
