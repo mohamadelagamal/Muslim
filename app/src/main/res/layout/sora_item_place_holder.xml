@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_placeHolder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/custom_soraNumber_placeHolder"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="13dp"
+                android:background="@color/shimmer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/custom_soraName_placeHolder"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_margin="14dp"
+                android:layout_marginStart="13dp"
+                android:background="@color/shimmer"
+                app:layout_constraintBottom_toBottomOf="@+id/custom_soraNumber_placeHolder"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toEndOf="@id/custom_soraNumber_placeHolder"
+                app:layout_constraintTop_toTopOf="@+id/custom_soraNumber_placeHolder" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
