@@ -1,4 +1,4 @@
-package com.example.muslim.ui.quran.adapter
+package com.example.muslim.ui.quran.soraa.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -35,7 +35,7 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
         onItemClickListener?.let {
             holder.itemView.setOnClickListener {
                 // position this is number in onBindViewHolder and items[position] this number in list
-                onItemClickListener?.onItemClick(item!!.index)
+                item!!.index?.let { it1 -> onItemClickListener?.onItemClick(it1) }
 
             }
         }
@@ -45,7 +45,7 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
         notifyDataSetChanged()
     }
 
-    var onItemClickListener:OnItemClickListener?=null
+    var onItemClickListener: OnItemClickListener?=null
     interface OnItemClickListener{
         fun onItemClick(item:String)
     }

@@ -1,22 +1,14 @@
 package com.example.muslim.ui.quran.soraa
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.muslim.R
-import com.example.muslim.databinding.FragmentQuranBinding
 import com.example.muslim.databinding.FragmentSoraaBinding
 import com.example.muslim.ui.base.fragment.BaseFragment
-import com.example.muslim.ui.quran.adapter.SurahAdapters
+import com.example.muslim.ui.quran.soraa.adapter.SurahAdapters
 
 class SoraaFragment : BaseFragment<FragmentSoraaBinding, SoraaViewModel>(),Navigator {
-    lateinit var adapter:SurahAdapters
+    lateinit var adapter: SurahAdapters
     override fun getLayoutID(): Int {
         return R.layout.fragment_soraa
     }
@@ -37,7 +29,7 @@ class SoraaFragment : BaseFragment<FragmentSoraaBinding, SoraaViewModel>(),Navig
     }
 
     private fun init() {
-        adapter=SurahAdapters(null)
+        adapter= SurahAdapters(null)
         viewDataBinding.RecyclerQuranNames.adapter=adapter
     }
 
