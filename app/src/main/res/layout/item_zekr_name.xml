@@ -10,15 +10,15 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="167dp"
+        android:layout_width="match_parent"
         android:layout_height="66dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:cardCornerRadius="12dp"
         android:background="#ffffff"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="26dp">
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="15dp"
+       >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -32,20 +32,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:adjustViewBounds="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="7dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="92dp" />
+                android:layout_margin="5dp" />
 
             <TextView
                 android:id="@+id/title_zekr"
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 tools:text="اذكار"
                 android:text="@{item.text}"
                 android:textColor="#42A5FF"
                 android:textSize="18sp"
-                android:layout_margin="9dp"
                 app:layout_constraintTop_toTopOf="@id/image_zekr"
                 app:layout_constraintStart_toEndOf="@id/image_zekr"
                 app:layout_constraintBottom_toBottomOf="@id/image_zekr" />

@@ -14,12 +14,162 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.quran.reading.ReadingQuranActivity">
+        >
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_gravity="top"
+            android:id="@+id/quran_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/page_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/seekBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="25"
+            android:elevation="1dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/al_qalam"
+            />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_constraint_container"
+            android:layout_width="match_parent"
+            android:layout_height="195dp"
+            android:padding="3sp"
+            android:visibility="invisible"
+            android:background="@drawable/text_frag_quran_page_frame"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:backgroundTint="@color/gray_with_obasity">
 
+            <TextView
+                android:id="@+id/fragQuran_search"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                style="@style/text_frag_quran_style"
+                android:text="search with aya"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@+id/fragQuran_Juzz"
+                app:layout_constraintWidth_percent="0.5" />
 
+            <TextView
+                android:id="@+id/fragQuran_Juzz"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="الاجزاء"
+                style="@style/text_frag_quran_style"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
 
+            <TextView
+                android:id="@+id/fragQuran_Soraa"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                style="@style/text_frag_quran_style"
+                android:text="الفهرس"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragQuran_Saved"
+                app:layout_constraintWidth_percent="0.5" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+            <TextView
+                android:id="@+id/fragQuran_Saved"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                style="@style/text_frag_quran_style"
+                android:text="علامات مرجعيه"
+
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <TextView
+                android:id="@+id/fragQuran_tafser"
+                style="@style/text_frag_quran_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="تفسير الصفحه"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.34"
+                app:layout_constraintWidth_percent="0.5" />
+            <TextView
+                android:id="@+id/fragQuran_adding"
+                style="@style/text_frag_quran_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="اضافه الي"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHeight_percent="0.34"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/fragQuran_Juzz"
+                tools:layout_editor_absoluteX="4dp" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/fragQuran_search"
+                tools:layout_editor_absoluteX="4dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_margin="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="15dp"/>
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:thumbTint="@color/color_light"
+            android:layout_marginBottom="20dp"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:id="@+id/guideline"
+            app:layout_constraintGuide_percent="0.8"
+            android:orientation="vertical"/>
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/drawer_layout"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:openDrawer="start">
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout></layout>

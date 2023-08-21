@@ -1,6 +1,39 @@
 package com.example.muslim.ui.quran.reading.adapter
 
-class ReadingQuranAdapter {
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.muslim.R
 
 
+class ReadingQuranAdapter(
+    var images: List<Int>? = null
+) : RecyclerView.Adapter<ReadingQuranAdapter.ViewPagerViewholder>() {
+
+    inner class ViewPagerViewholder(itemView: View): RecyclerView.ViewHolder(itemView)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewholder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_reading_quran,parent,false)
+        return ViewPagerViewholder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return images?.size ?: 0
+    }
+
+
+    override fun onBindViewHolder(holder: ViewPagerViewholder, position: Int) {
+        val currentImage = images?.get(position)
+
+        val imageView = holder.itemView.findViewById<ImageView>(R.id.imageView)
+        currentImage?.let { imageView.setImageResource(it) }
+    }
+    fun changeData(newList:List<Bitmap>){
+       // images = newList
+        notifyDataSetChanged()
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.muslim.ui.quran.soraa.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -26,6 +27,7 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
 
     override fun getItemCount(): Int =list?.size ?:0
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: viewholder, position: Int) {
                val item=list!![position]
         holder.bind(item)
@@ -38,6 +40,8 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
                 item!!.index?.let { it1 -> onItemClickListener?.onItemClick(it1) }
 
             }
+
+
         }
     }
     fun changeData(newList:List<SurahInfoItem>){

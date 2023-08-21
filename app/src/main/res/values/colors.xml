@@ -9,4 +9,5 @@
     <color name="transparent">#00000000</color>
     <color name="divider">#eeeeee</color>
     <color name="shimmer">#DDDDDD</color>
+    <color name="gray_with_obasity">#F5979797</color>
 </resources>
