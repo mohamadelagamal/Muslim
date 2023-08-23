@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muslim.R
+import com.example.muslim.model.quran.SurahInfoItem
 
 
 class ReadingQuranAdapter(
@@ -31,9 +32,20 @@ class ReadingQuranAdapter(
 
         val imageView = holder.itemView.findViewById<ImageView>(R.id.imageView)
         currentImage?.let { imageView.setImageResource(it) }
+
+        onItemClickListener?.let {
+            holder.itemView.setOnClickListener {
+                // position this is number in onBindViewHolder and items[position] this number in list
+                currentImage?.let { it1 -> onItemClickListener?.onItemClick(it1) }
+
+            }
+
+
+        }
     }
-    fun changeData(newList:List<Bitmap>){
-       // images = newList
-        notifyDataSetChanged()
+
+    var onItemClickListener: OnItemClickListener? = null
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 }

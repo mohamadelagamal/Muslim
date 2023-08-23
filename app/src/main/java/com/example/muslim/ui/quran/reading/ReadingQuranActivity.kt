@@ -1,20 +1,22 @@
 package com.example.muslim.ui.quran.reading
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.Toast
-import androidx.core.graphics.toColor
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.muslim.R
 import com.example.muslim.databinding.ActivityReadingQuranBinding
 import com.example.muslim.extension.Constant
+import com.example.muslim.model.quran.SurahInfoItem
 import com.example.muslim.ui.base.activity.BaseActivity
+import com.example.muslim.ui.quran.QuranFragment
 import com.example.muslim.ui.quran.reading.adapter.ReadingQuranAdapter
+import com.example.muslim.ui.quran.soraa.SoraaFragment
 
 
 class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQuranViewModel>(),
@@ -23,11 +25,14 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
 
     lateinit var suraId: String
     lateinit var imges: List<Int>
+    lateinit var adapter: ReadingQuranAdapter
+    lateinit var surahInfoItem: SurahInfoItem
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        suraId = intent.getStringExtra(Constant.SURA_ID).toString()
+        surahInfoItem = intent.getParcelableExtra<SurahInfoItem>(Constant.SURA_ID)!!
+        suraId = surahInfoItem?.index.toString()
         viewDataBinding.vmQuranReading = viewModel
         viewModel.navigator = this
         // create list of images from assets folder?
@@ -645,25 +650,19 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
             R.drawable.page604,
 
             )
-        viewDataBinding.quranPager.adapter = ReadingQuranAdapter(imges)
+        // set adapter for viewpager2
+        adapter = ReadingQuranAdapter(imges)
+        viewDataBinding.quranPager.adapter = adapter
         // how to get current page in viewpager2
         viewDataBinding.quranPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                viewDataBinding.pageNumber.text = (position + 1).toString()
+               viewDataBinding.pageNumber.text = (position + 1).toString()
             }
         })
-
-
         viewDataBinding.quranPager.orientation = RecyclerView.HORIZONTAL
         viewDataBinding.quranPager.layoutDirection = View.LAYOUT_DIRECTION_RTL
-        // how change color of seekbar
-
-        viewDataBinding.seekBar.max = imges.size
-        // seekBar start from right to left
-        viewDataBinding.seekBar.layoutDirection = View.LAYOUT_DIRECTION_RTL
-        // set animation for viewpager2
         when (suraId) {
             "1" -> {
                 viewDataBinding.quranPager.setCurrentItem(0, true)
@@ -1234,6 +1233,15 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
                 viewDataBinding.seekBar.progress = 603
             }
         }
+
+        viewDataBinding.surahNameEnglish.text = surahInfoItem?.title
+        viewDataBinding.surahNameArabic.text = surahInfoItem?.titleAr
+        // how change color of seekbar
+
+        viewDataBinding.seekBar.max = imges.size
+        // seekBar start from right to left
+        viewDataBinding.seekBar.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        // set animation for viewpager2
         // click on seekBar to change page
         viewDataBinding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
@@ -1250,15 +1258,27 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
             }
         })
 
+        // Double Click Listener implemented on the Text View
+        adapter.onItemClickListener = object : ReadingQuranAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                if (viewDataBinding.bottomConstraintContainer.visibility == View.VISIBLE) {
+                    viewDataBinding.linearLayout.visibility = View.GONE
+                    viewDataBinding.bottomConstraintContainer.visibility = View.GONE
+                } else {
+                    viewDataBinding.bottomConstraintContainer.visibility = View.VISIBLE
+                    viewDataBinding.linearLayout.visibility = View.VISIBLE
+
+                }
+            }
+
+        }
 
     }
 
     override fun getLayoutID(): Int = R.layout.activity_reading_quran
 
-    override fun makeViewModelProvider(): ReadingQuranViewModel =
-        ViewModelProvider(this).get(ReadingQuranViewModel::class.java)
+    override fun makeViewModelProvider(): ReadingQuranViewModel = ViewModelProvider(this).get(ReadingQuranViewModel::class.java)
 
 
 }
-
 

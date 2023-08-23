@@ -17,7 +17,6 @@ abstract class BaseActivity <DB : ViewDataBinding, VM : BaseViewModel<*>> : AppC
         viewModel=makeViewModelProvider()
         subscribToLiveData()
     }
-    lateinit var view: View
     private fun subscribToLiveData() {
         viewModel.messageLiveData.observe(this,{
             showAlertDialog(it)

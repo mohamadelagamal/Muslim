@@ -14,10 +14,13 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.quran.reading.ReadingQuranActivity"
-            android:exported="false" />
+            android:exported="false"
+
+            />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".ui.splash.SplashScreen"
             android:exported="true">

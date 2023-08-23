@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/abril_fatface</item>
         <item>@font/akaya_telivigala</item>
+        <item>@font/aubrey</item>
     </array>
 </resources>

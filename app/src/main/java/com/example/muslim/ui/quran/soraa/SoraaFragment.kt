@@ -6,6 +6,7 @@ import android.view.View
 import com.example.muslim.R
 import com.example.muslim.databinding.FragmentSoraaBinding
 import com.example.muslim.extension.Constant
+import com.example.muslim.model.quran.SurahInfoItem
 import com.example.muslim.ui.base.fragment.BaseFragment
 import com.example.muslim.ui.quran.reading.ReadingQuranActivity
 import com.example.muslim.ui.quran.soraa.adapter.SurahAdapters
@@ -35,13 +36,17 @@ class SoraaFragment : BaseFragment<FragmentSoraaBinding, SoraaViewModel>(),Navig
         adapter= SurahAdapters(null)
         viewDataBinding.RecyclerQuranNames.adapter=adapter
         adapter.onItemClickListener=object :SurahAdapters.OnItemClickListener{
-            override fun onItemClick(item: String) {
-                val intent = Intent(requireContext(), ReadingQuranActivity::class.java)
-                intent.putExtra(Constant.SURA_ID, item)
-                startActivity(intent)
+            override fun onItemClick(item: String,surahInformationIem: SurahInfoItem) {
+                openReadingQuranActivity(item,surahInformationIem)
             }
 
         }
+    }
+
+    private fun openReadingQuranActivity(item: String, surahInformationIem: SurahInfoItem) {
+        val intent = Intent(requireContext(), ReadingQuranActivity::class.java)
+        intent.putExtra(Constant.SURA_ID, surahInformationIem)
+        startActivity(intent)
     }
 
     private fun subscribeToLiveData() {

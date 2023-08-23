@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     // navigation safe args plugin
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
 }
 
 android {

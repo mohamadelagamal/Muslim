@@ -37,7 +37,7 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
         onItemClickListener?.let {
             holder.itemView.setOnClickListener {
                 // position this is number in onBindViewHolder and items[position] this number in list
-                item!!.index?.let { it1 -> onItemClickListener?.onItemClick(it1) }
+                item!!.index?.let { it1 -> onItemClickListener?.onItemClick(it1,item) }
 
             }
 
@@ -51,6 +51,6 @@ class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.
 
     var onItemClickListener: OnItemClickListener?=null
     interface OnItemClickListener{
-        fun onItemClick(item:String)
+        fun onItemClick(item:String,surahInformationIem: SurahInfoItem)
     }
 }
