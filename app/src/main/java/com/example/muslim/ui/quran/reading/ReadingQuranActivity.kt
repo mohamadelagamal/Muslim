@@ -2,21 +2,34 @@ package com.example.muslim.ui.quran.reading
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.example.muslim.R
+import com.example.muslim.database.bookmark.SavedPage
 import com.example.muslim.databinding.ActivityReadingQuranBinding
 import com.example.muslim.extension.Constant
 import com.example.muslim.model.quran.SurahInfoItem
 import com.example.muslim.ui.base.activity.BaseActivity
-import com.example.muslim.ui.quran.QuranFragment
 import com.example.muslim.ui.quran.reading.adapter.ReadingQuranAdapter
-import com.example.muslim.ui.quran.soraa.SoraaFragment
+import kotlinx.coroutines.launch
 
 
 class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQuranViewModel>(),
@@ -27,6 +40,7 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
     lateinit var imges: List<Int>
     lateinit var adapter: ReadingQuranAdapter
     lateinit var surahInfoItem: SurahInfoItem
+    private var isPageAdded = false
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +50,167 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
         viewDataBinding.vmQuranReading = viewModel
         viewModel.navigator = this
         // create list of images from assets folder?
+        showViewPager()
+        clickListenerQuranAdapter()
+        showSeekBar()
+        // Double Click Listener implemented on the Text View
+        // share image
+        shareImage()
+        // make bookMark for last page
+        bookMark()
+
+        // check if viewPager is swipe or not
+        checkSwipe()
+
+    }
+
+    private fun checkSwipe() {
+        viewDataBinding.quranPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                Log.d("TAG", "onPageSelected: $position")
+//                if (position == 0) {
+//                    viewDataBinding.quranPager.isUserInputEnabled = false
+//                } else {
+//                    viewDataBinding.quranPager.isUserInputEnabled = true
+//                }
+                // how return savedLottie to default value
+                changeBookMark(0.5f, 1.0f, "add")
+
+            }
+        })
+    }
+
+    private fun bookMark() {
+        viewDataBinding.bookMarkButton.setOnClickListener {
+            // send current page to adapter
+            if (isPageAdded) {
+                // deleteItem()
+            } else {
+                addItem()
+            }
+        }
+    }
+
+    private fun addItem() {
+        viewModel.addPage(SavedPage(viewDataBinding.quranPager.currentItem))
+        lifecycleScope.launch {
+            viewModel.mutableState.collect {
+                if (it == Constant.ADDING) {
+                    isPageAdded = true
+                    changeBookMark(0.0f, 0.5f, "delete",true )
+                }
+            }
+        }
+    }
+
+    private fun changeBookMark(
+        minProgress: Float,
+        maxProgress: Float,
+        word: String,
+        changeBackGround: Boolean = false
+    ) {
+        var yourColor:Int ?= null
+        if (changeBackGround) {
+            yourColor = ContextCompat.getColor(this, R.color.read)
+        } else {
+            yourColor = ContextCompat.getColor(this, R.color.white)
+        }
+        val filter = SimpleColorFilter(yourColor)
+        val keyPath = KeyPath("**")
+        val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
+        if (changeBackGround) {
+            viewDataBinding.savedLottie.setMinAndMaxProgress(minProgress, maxProgress)
+            viewDataBinding.savedLottie.playAnimation()
+            viewDataBinding.bookMarkButton.text = word
+            viewDataBinding.savedLottie.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+
+
+            Log.d("TAG", "changeBookMark: ${viewDataBinding.quranPager.currentItem}")
+            adapter.itemCount = viewDataBinding.quranPager.currentItem
+            adapter.notifyDataSetChanged()
+        } else {
+            viewDataBinding.bookMarkButton.text = word
+            // set default color for lottie
+            viewDataBinding.savedLottie.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+        }
+
+    }
+
+    private fun shareImage() {
+        viewDataBinding.shareQuranButton.setOnClickListener {
+            // share image form drawable
+            val bitmap = BitmapFactory.decodeResource(
+                resources,
+                imges[viewDataBinding.quranPager.currentItem]
+            )
+            // change bitmap image background to white
+            val whiteBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
+            val canvas = Canvas(whiteBitmap)
+            canvas.drawColor(Color.WHITE)
+            canvas.drawBitmap(bitmap, 0f, 0f, null)
+            // save image in storage
+            val path = MediaStore.Images.Media.insertImage(
+                contentResolver,
+                whiteBitmap,
+                "Quran",
+                null
+            )
+            // share image
+            val uri = Uri.parse(path)
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "image/png"
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            startActivity(Intent.createChooser(intent, "Share Image"))
+
+
+        }
+    }
+
+    private fun clickListenerQuranAdapter() {
+        viewDataBinding.bottomConstraintContainer.visibility = View.GONE
+        adapter.onItemClickListener = object : ReadingQuranAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                if (viewDataBinding.bottomConstraintContainer.visibility == View.VISIBLE) {
+                    viewDataBinding.linearLayout.visibility = View.GONE
+                    viewDataBinding.bottomConstraintContainer.visibility = View.GONE
+                } else {
+                    viewDataBinding.bottomConstraintContainer.visibility = View.VISIBLE
+                    viewDataBinding.linearLayout.visibility = View.VISIBLE
+
+                }
+            }
+
+        }
+
+    }
+
+    private fun showSeekBar() {
+        viewDataBinding.seekBar.max = imges.size
+        // seekBar start from right to left
+        viewDataBinding.seekBar.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        // set animation for viewpager2
+        // click on seekBar to change page
+        viewDataBinding.seekBar.progress = viewDataBinding.quranPager.currentItem
+
+        viewDataBinding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                // TODO Auto-generated method stub
+                viewDataBinding.quranPager.setCurrentItem(progress, true)
+            }
+        })
+
+    }
+
+    private fun showViewPager() {
         imges = listOf(
             R.drawable.page001,
             R.drawable.page002,
@@ -658,10 +833,10 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-               viewDataBinding.pageNumber.text = (position + 1).toString()
+                viewDataBinding.pageNumber.text = (position + 1).toString()
             }
         })
-        viewDataBinding.quranPager.orientation = RecyclerView.HORIZONTAL
+        viewDataBinding.quranPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewDataBinding.quranPager.layoutDirection = View.LAYOUT_DIRECTION_RTL
         when (suraId) {
             "1" -> {
@@ -1229,56 +1404,21 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
             }
 
             "114" -> {
-                viewDataBinding.quranPager.setCurrentItem(603, true)
                 viewDataBinding.seekBar.progress = 603
+                viewDataBinding.quranPager.setCurrentItem(603, true)
             }
-        }
-
-        viewDataBinding.surahNameEnglish.text = surahInfoItem?.title
-        viewDataBinding.surahNameArabic.text = surahInfoItem?.titleAr
-        // how change color of seekbar
-
-        viewDataBinding.seekBar.max = imges.size
-        // seekBar start from right to left
-        viewDataBinding.seekBar.layoutDirection = View.LAYOUT_DIRECTION_RTL
-        // set animation for viewpager2
-        // click on seekBar to change page
-        viewDataBinding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                // TODO Auto-generated method stub
-                viewDataBinding.quranPager.setCurrentItem(progress, true)
-            }
-        })
-
-        // Double Click Listener implemented on the Text View
-        adapter.onItemClickListener = object : ReadingQuranAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                if (viewDataBinding.bottomConstraintContainer.visibility == View.VISIBLE) {
-                    viewDataBinding.linearLayout.visibility = View.GONE
-                    viewDataBinding.bottomConstraintContainer.visibility = View.GONE
-                } else {
-                    viewDataBinding.bottomConstraintContainer.visibility = View.VISIBLE
-                    viewDataBinding.linearLayout.visibility = View.VISIBLE
-
-                }
-            }
-
         }
 
     }
 
     override fun getLayoutID(): Int = R.layout.activity_reading_quran
 
-    override fun makeViewModelProvider(): ReadingQuranViewModel = ViewModelProvider(this).get(ReadingQuranViewModel::class.java)
+    override fun makeViewModelProvider(): ReadingQuranViewModel =
+        ViewModelProvider(this).get(ReadingQuranViewModel::class.java)
+
+    override fun clickOnBookmark() {
+
+    }
 
 
 }
-

@@ -1,20 +1,31 @@
 package com.example.muslim.ui.quran.reading
 
-import android.app.Application
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.RecyclerView
+import com.example.muslim.database.bookmark.SavedPage
+import com.example.muslim.extension.Constant
 import com.example.muslim.ui.base.activity.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import java.util.concurrent.Flow
 
- class ReadingQuranViewModel(): BaseViewModel<Navigator>() {
+class ReadingQuranViewModel(): BaseViewModel<Navigator>() {
 
+  // create list of images to show in viewpager
+    var images = MutableLiveData<List<Int>>() // list of images
+     val mutableState = MutableStateFlow("Nothing")
+   //  private val savedPageDao = QuranDataBase.getInstance(getApplication())?.savedPageDao()
 
+     fun addPage(savedPage: SavedPage) {
+         viewModelScope.launch(Dispatchers.IO){
+           //  if (savedPageDao!!.insertNewPage(savedPage) >= 0) {
+                 mutableState.emit(Constant.ADDING)
+             //}
 
+         }
+     }
+    fun clickOnBookmark(){
+        navigator?.clickOnBookmark()
+    }
 
 }

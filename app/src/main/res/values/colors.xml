@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_dark">#2C3145</color>
     <color name="color_light">#35686E</color>
@@ -10,4 +10,6 @@
     <color name="divider">#eeeeee</color>
     <color name="shimmer">#DDDDDD</color>
     <color name="gray_with_obasity">#F5979797</color>
+    <color name="gray_background_quran">#CC000000</color>
+    <color name="read">#FF1100</color>
 </resources>
