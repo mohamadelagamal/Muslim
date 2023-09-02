@@ -9,33 +9,17 @@
     >
 
 
-    <androidx.constraintlayout.widget.Guideline
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_splash"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/guideline"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5"/>
-    <ImageView
-        android:id="@+id/iv_splash"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/icon"
-        app:layout_constraintBottom_toTopOf="@id/tv_splash"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/letters"
+        android:textAlignment="center"
+        app:lottie_autoPlay="true"
+        android:tooltipText="Muslim"
         />
 
 
-
-    <TextView
-        android:id="@+id/tv_splash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/white"
-        android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        android:textSize="30dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

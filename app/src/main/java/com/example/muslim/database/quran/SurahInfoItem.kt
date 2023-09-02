@@ -1,4 +1,4 @@
-package com.example.muslim.model.quran
+package com.example.muslim.database.quran
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

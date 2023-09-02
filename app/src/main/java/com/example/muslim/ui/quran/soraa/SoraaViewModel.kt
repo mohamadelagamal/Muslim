@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.muslim.model.quran.SurahInfoItem
+import com.example.muslim.database.quran.SurahInfoItem
 import com.example.muslim.ui.base.activity.BaseViewModel
 import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson

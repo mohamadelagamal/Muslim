@@ -1,4 +1,4 @@
-package com.example.muslim.model.ziker
+package com.example.muslim.database.ziker
 
 data class ZikerNames(val id:Int?=null
                       ,val category:String?=null

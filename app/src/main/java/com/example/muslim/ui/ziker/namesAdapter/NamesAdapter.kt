@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.muslim.R
 import com.example.muslim.databinding.ItemZekrNameBinding
-import com.example.muslim.model.ziker.ZikerNames
+import com.example.muslim.database.ziker.ZikerNames
 
 class NamesAdapter(val list:List<ZikerNames>):Adapter<NamesAdapter.viewHolder>() {
 

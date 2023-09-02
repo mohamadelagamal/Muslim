@@ -1,17 +1,14 @@
-package com.example.muslim.ui.quran.juzz
+package com.example.muslim.ui.quran.reading.details.parts
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.example.muslim.R
 import com.example.muslim.databinding.FragmentJuzzBinding
-import com.example.muslim.model.quran.SurahInfoItem
+import com.example.muslim.database.quran.SurahInfoItem
 import com.example.muslim.ui.base.fragment.BaseFragment
-import com.example.muslim.ui.quran.juzz.adapter.SelectionQuranAdapter
+import com.example.muslim.ui.quran.reading.details.parts.adapter.SelectionQuranAdapter
 
-class JuzzFragment : BaseFragment<FragmentJuzzBinding,JuzzViewModel>(),Navigator {
+class JuzzFragment : BaseFragment<FragmentJuzzBinding, JuzzViewModel>(), Navigator {
 
     val list = listOf<SurahInfoItem>(
         SurahInfoItem(index = "1", titleAr = "الجزء 1", title = "selection one",type = "pages", count = 1, place = "21"),
@@ -54,8 +51,6 @@ class JuzzFragment : BaseFragment<FragmentJuzzBinding,JuzzViewModel>(),Navigator
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.item=viewModel
         viewModel.navigator=this
-
-
         init()
     }
 

@@ -64,11 +64,8 @@
             android:layout_height="195dp"
             android:background="@drawable/text_frag_quran_page_frame"
             android:padding="3sp"
-            android:visibility="invisible"
-
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent">
-
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bookMark_button"
@@ -165,12 +162,23 @@
                 android:text="share"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:icon="@drawable/baseline_share_24"
                 app:iconGravity="textStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.34"
                 app:layout_constraintWidth_percent="0.5" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/shareLottie"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintWidth_percent="0.06"
+                app:lottie_rawRes="@raw/share"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toBottomOf="@id/bookMark_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fragQuran_adding"

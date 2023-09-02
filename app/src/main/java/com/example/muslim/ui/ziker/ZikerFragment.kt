@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.muslim.R
 import com.example.muslim.databinding.FragmentZikerBinding
-import com.example.muslim.model.ziker.ZikerNames
+import com.example.muslim.database.ziker.ZikerNames
 import com.example.muslim.ui.base.fragment.BaseFragment
 import com.example.muslim.ui.ziker.namesAdapter.NamesAdapter
 

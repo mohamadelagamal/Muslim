@@ -6,7 +6,7 @@
     <data>
           <variable
               name="item"
-              type="com.example.muslim.model.quran.SurahInfoItem" />
+              type="com.example.muslim.database.quran.SurahInfoItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

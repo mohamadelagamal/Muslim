@@ -12,26 +12,22 @@ abstract class QuranDataBase :RoomDatabase(){
 
     abstract fun savedPageDao(): SavedPageDao
     companion object{
-        const val DATABASE_NAME = "quran.db"
-        private var instance: QuranDataBase? = null
-        fun getInstance(context: Context): QuranDataBase? {
-            if (instance == null) {
-                synchronized(QuranDataBase::class.java) {
-                    if (instance == null) {
-                        try {
-                            instance = Room.databaseBuilder(
-                                context.applicationContext,
-                                QuranDataBase::class.java, DATABASE_NAME
-                            )
-                                .createFromAsset("quran/quran.db")
-                                .build()
-                        } catch (e: Exception) {
-                            return null
-                        }
-                    }
-                }
+        private val DATABASE_NAME = "quran-Database";
+
+        private var myDataBase: QuranDataBase? = null;
+
+        fun getInstance(context: Context): QuranDataBase {
+            // single object from database (Singleton pattern)
+            if (myDataBase == null) {
+                myDataBase = Room.databaseBuilder(
+                    context, QuranDataBase::class.java,
+                    DATABASE_NAME
+                )
+                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()//ANR -> wait-kill
+                    .build()
             }
-            return instance
+            return myDataBase!!;
         }
     }
 }

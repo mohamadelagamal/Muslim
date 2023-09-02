@@ -24,23 +24,24 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.example.muslim.R
 import com.example.muslim.database.bookmark.SavedPage
+import com.example.muslim.database.bookmark.mydatabase.QuranDataBase
+import com.example.muslim.database.details.Details
 import com.example.muslim.databinding.ActivityReadingQuranBinding
 import com.example.muslim.extension.Constant
-import com.example.muslim.model.quran.SurahInfoItem
+import com.example.muslim.database.quran.SurahInfoItem
 import com.example.muslim.ui.base.activity.BaseActivity
 import com.example.muslim.ui.quran.reading.adapter.ReadingQuranAdapter
+import com.example.muslim.ui.quran.reading.details.DetailsActivityReadingQuran
 import kotlinx.coroutines.launch
 
 
-class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQuranViewModel>(),
-    Navigator {
+class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQuranViewModel>(), Navigator {
 
 
     lateinit var suraId: String
     lateinit var imges: List<Int>
     lateinit var adapter: ReadingQuranAdapter
     lateinit var surahInfoItem: SurahInfoItem
-    private var isPageAdded = false
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +56,46 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
         showSeekBar()
         // Double Click Listener implemented on the Text View
         // share image
-        shareImage()
+        shareImageButton()
         // make bookMark for last page
         bookMark()
 
         // check if viewPager is swipe or not
         checkSwipe()
+        // check if page is added or not
+        checkPageAdded(viewDataBinding.quranPager.currentItem)
+
+    }
+
+    private fun clickListenerQuranAdapter() {
+        viewDataBinding.bottomConstraintContainer.visibility = View.GONE
+        adapter.onItemClickListener = object : ReadingQuranAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                if (viewDataBinding.bottomConstraintContainer.visibility == View.VISIBLE) {
+                    viewDataBinding.linearLayout.visibility = View.GONE
+                    viewDataBinding.bottomConstraintContainer.visibility = View.GONE
+                } else {
+                    viewDataBinding.bottomConstraintContainer.visibility = View.VISIBLE
+                    viewDataBinding.linearLayout.visibility = View.VISIBLE
+
+                }
+            }
+
+        }
+    }
+
+    private fun checkPageAdded( numberPageChecked:Int) {
+        val savedPageDao = QuranDataBase.getInstance(this).savedPageDao()
+        val savedPage = savedPageDao.getAllQuran()
+        savedPage.forEach {
+            // add it to list
+            if (it.pageNumber == numberPageChecked) {
+              //  adapter.changeListBookMark(savedPage) // change color for item
+                changeBookMark(0.0f, 0.5f, "delete", true)
+            }
+
+        }
+        // check if button text is add or delete
 
     }
 
@@ -70,13 +105,9 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 Log.d("TAG", "onPageSelected: $position")
-//                if (position == 0) {
-//                    viewDataBinding.quranPager.isUserInputEnabled = false
-//                } else {
-//                    viewDataBinding.quranPager.isUserInputEnabled = true
-//                }
                 // how return savedLottie to default value
                 changeBookMark(0.5f, 1.0f, "add")
+                checkPageAdded(position)
 
             }
         })
@@ -85,24 +116,32 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
     private fun bookMark() {
         viewDataBinding.bookMarkButton.setOnClickListener {
             // send current page to adapter
-            if (isPageAdded) {
-                // deleteItem()
+            if (viewDataBinding.bookMarkButton.text == "delete") {
+                 deleteItem()
             } else {
                 addItem()
             }
         }
+
+    }
+
+    private fun deleteItem() {
+        val savedPageDao = QuranDataBase.getInstance(this).savedPageDao()
+        val savedPage = savedPageDao.deletePageByPageNumber(viewDataBinding.quranPager.currentItem)
+        changeBookMark(0.5f, 1.0f, "add")
+        
     }
 
     private fun addItem() {
-        viewModel.addPage(SavedPage(viewDataBinding.quranPager.currentItem))
+        viewModel.addPage(context = this, SavedPage(pageNumber = viewDataBinding.quranPager.currentItem))
         lifecycleScope.launch {
             viewModel.mutableState.collect {
                 if (it == Constant.ADDING) {
-                    isPageAdded = true
-                    changeBookMark(0.0f, 0.5f, "delete",true )
+                    changeBookMark(0.0f, 0.5f, "delete", true)
                 }
             }
         }
+
     }
 
     private fun changeBookMark(
@@ -126,10 +165,10 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
             viewDataBinding.bookMarkButton.text = word
             viewDataBinding.savedLottie.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 
-
             Log.d("TAG", "changeBookMark: ${viewDataBinding.quranPager.currentItem}")
-            adapter.itemCount = viewDataBinding.quranPager.currentItem
-            adapter.notifyDataSetChanged()
+            //adapter.itemCount = viewDataBinding.quranPager.currentItem
+            //adapter.notifyDataSetChanged()
+
         } else {
             viewDataBinding.bookMarkButton.text = word
             // set default color for lottie
@@ -138,54 +177,37 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
 
     }
 
-    private fun shareImage() {
-        viewDataBinding.shareQuranButton.setOnClickListener {
-            // share image form drawable
-            val bitmap = BitmapFactory.decodeResource(
-                resources,
-                imges[viewDataBinding.quranPager.currentItem]
-            )
-            // change bitmap image background to white
-            val whiteBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
-            val canvas = Canvas(whiteBitmap)
-            canvas.drawColor(Color.WHITE)
-            canvas.drawBitmap(bitmap, 0f, 0f, null)
-            // save image in storage
-            val path = MediaStore.Images.Media.insertImage(
-                contentResolver,
-                whiteBitmap,
-                "Quran",
-                null
-            )
-            // share image
-            val uri = Uri.parse(path)
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "image/png"
-            intent.putExtra(Intent.EXTRA_STREAM, uri)
-            startActivity(Intent.createChooser(intent, "Share Image"))
-
-
+    private fun shareImageButton() {
+        viewDataBinding.run {
+            shareLottie.playAnimation()
+            shareQuranButton.setOnClickListener {
+                shareLottie.playAnimation()
+                lifecycleScope.launch { shareImage() } }
         }
     }
-
-    private fun clickListenerQuranAdapter() {
-        viewDataBinding.bottomConstraintContainer.visibility = View.GONE
-        adapter.onItemClickListener = object : ReadingQuranAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                if (viewDataBinding.bottomConstraintContainer.visibility == View.VISIBLE) {
-                    viewDataBinding.linearLayout.visibility = View.GONE
-                    viewDataBinding.bottomConstraintContainer.visibility = View.GONE
-                } else {
-                    viewDataBinding.bottomConstraintContainer.visibility = View.VISIBLE
-                    viewDataBinding.linearLayout.visibility = View.VISIBLE
-
-                }
-            }
-
-        }
+    suspend fun shareImage(){
+        // share image form drawable
+        val bitmap = BitmapFactory.decodeResource(
+            resources,
+            imges[viewDataBinding.quranPager.currentItem]
+        )
+        // change bitmap image background to white
+        val whiteBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
+        val canvas = Canvas(whiteBitmap)
+        canvas.drawColor(Color.WHITE)
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
+        // save image in storage
+        // share image
+        val path = MediaStore.Images.Media.insertImage(contentResolver,whiteBitmap,"",null)
+        val uri = Uri.parse(path)
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "image/png"
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        startActivity(Intent.createChooser(intent, "Share Image"))
+        // refresh path
+        MediaStore.Images.Media.insertImage(contentResolver,whiteBitmap,"",null)
 
     }
-
     private fun showSeekBar() {
         viewDataBinding.seekBar.max = imges.size
         // seekBar start from right to left
@@ -1416,8 +1438,27 @@ class ReadingQuranActivity : BaseActivity<ActivityReadingQuranBinding, ReadingQu
     override fun makeViewModelProvider(): ReadingQuranViewModel =
         ViewModelProvider(this).get(ReadingQuranViewModel::class.java)
 
-    override fun clickOnBookmark() {
+    override fun openParts() {
+      movingDetailsActivity(Constant.SELECTOR_PARTS)
+    }
 
+    override fun openReadingQuran() {
+        movingDetailsActivity(Constant.SELECTOR_READING)
+    }
+
+    override fun openAbout() {
+        movingDetailsActivity(Constant.SELECTOR_ABOUT)
+    }
+
+    override fun openSearch() {
+        movingDetailsActivity(Constant.SELECTOR_SEARCH)
+    }
+
+    fun movingDetailsActivity(value: Int){
+        val intent = Intent(this,DetailsActivityReadingQuran::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        intent.putExtra(Constant.DETAILS,Details(selector = value))
+        startActivity(intent)
     }
 
 

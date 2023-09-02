@@ -16,7 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_container"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/quran_pager"
@@ -61,13 +64,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottom_constraint_container"
             android:layout_width="match_parent"
-            android:layout_height="195dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent=".18"
             android:background="@drawable/text_frag_quran_page_frame"
             android:padding="3sp"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent">
-
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bookMark_button"
@@ -120,6 +122,7 @@
                 android:textAllCaps="false"
                 app:icon="@drawable/baseline_search_24"
                 app:iconGravity="textStart"
+                android:onClick="@{()->vmQuranReading.clickSearch()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.33"
                 app:layout_constraintTop_toTopOf="parent"
@@ -134,6 +137,7 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:text="reading"
                 android:textAllCaps="false"
+                android:onClick="@{()->vmQuranReading.clickReadingQuran()}"
                 app:icon="@drawable/baseline_library_books_24"
                 app:iconGravity="textStart"
                 app:layout_constraintHeight_percent="0.33"
@@ -149,6 +153,7 @@
                 android:fontFamily="@font/medium"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="parts"
+                android:onClick="@{()->vmQuranReading.clickOnParts()}"
                 android:textAllCaps="false"
                 app:icon="@drawable/baseline_drag_indicator_24"
                 app:iconGravity="textStart"
@@ -167,13 +172,27 @@
                 android:text="share"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:icon="@drawable/baseline_share_24"
                 app:iconGravity="textStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.34"
                 app:layout_constraintWidth_percent="0.5" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/shareLottie"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintWidth_percent="0.06"
+                app:lottie_rawRes="@raw/share"
+                android:outlineAmbientShadowColor="@color/read"
+                android:outlineSpotShadowColor="@color/read"
 
+                android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toBottomOf="@id/bookMark_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+
+                />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fragQuran_adding"
                 android:layout_width="0dp"
@@ -183,6 +202,7 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:text="about"
                 android:textAllCaps="false"
+                android:onClick="@{()->vmQuranReading.clickAbout()}"
                 android:textColor="@color/white"
                 app:icon="@drawable/baseline_groups_24"
                 app:iconGravity="textStart"

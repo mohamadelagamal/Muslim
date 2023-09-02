@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.muslim.R
 import com.example.muslim.databinding.ItemsSurahBinding
-import com.example.muslim.model.quran.SurahInfoItem
+import com.example.muslim.database.quran.SurahInfoItem
 
 class SurahAdapters(var list:List<SurahInfoItem?>?=null) :Adapter<SurahAdapters.viewholder>(){
 
     class viewholder(val itemsBinding: ItemsSurahBinding):ViewHolder(itemsBinding.root){
-      fun bind(item:SurahInfoItem?){
+      fun bind(item: SurahInfoItem?){
           itemsBinding.item=item
           itemsBinding.invalidateAll()
       }

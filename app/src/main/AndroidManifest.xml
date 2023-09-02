@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
+        android:name=".application.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,14 +16,14 @@
         android:theme="@style/Theme.Muslim"
         tools:targetApi="31">
         <activity
+            android:name=".ui.quran.reading.details.DetailsActivityReadingQuran"
+            android:exported="false" />
+        <activity
             android:name=".ui.quran.reading.ReadingQuranActivity"
-            android:exported="false"
-
-            />
+            android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".ui.splash.SplashScreen"
             android:exported="true">
@@ -35,18 +36,16 @@
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-        <!-- add file provider -->
+            android:resource="@array/preloaded_fonts" /> <!-- add file provider -->
         <provider
-            android:authorities="com.example.muslim.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.muslim.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-
     </application>
 
 </manifest>

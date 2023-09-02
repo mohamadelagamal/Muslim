@@ -1,17 +1,14 @@
 package com.example.muslim.ui.quran.reading.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.ColorFilter
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
@@ -19,21 +16,34 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.example.muslim.R
-import com.example.muslim.model.quran.SurahInfoItem
-import com.example.muslim.ui.quran.reading.ReadingQuranActivity
+import com.example.muslim.database.bookmark.SavedPage
+import com.example.muslim.databinding.ItemReadingQuranBinding
+import com.example.muslim.databinding.ItemZekrNameBinding
+import com.example.muslim.ui.ziker.namesAdapter.NamesAdapter
 
 
 class ReadingQuranAdapter(
-    var images: List<Int>? = null,var itemCount :Int ?=  null
-) : RecyclerView.Adapter<ReadingQuranAdapter.ViewPagerViewholder>() {
+    var images: List<Int>? = null, var listSavedPage: List<SavedPage>? = null
+) : RecyclerView.Adapter<ReadingQuranAdapter.ViewHolder>() {
 
 
-    inner class ViewPagerViewholder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(val itemBinding: ItemReadingQuranBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
+        fun bind(item: SavedPage) {
+            itemBinding.item = item
+            itemBinding.invalidateAll()
+        }
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewholder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_reading_quran, parent, false)
-        return ViewPagerViewholder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val viewBinding: ItemReadingQuranBinding = DataBindingUtil
+            .inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_reading_quran,
+                parent,
+                false
+            )
+        return ViewHolder(viewBinding)
     }
 
     override fun getItemCount(): Int {
@@ -42,18 +52,9 @@ class ReadingQuranAdapter(
 
 
     @SuppressLint("ResourceAsColor")
-    override fun onBindViewHolder(holder: ViewPagerViewholder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentImage = images?.get(position)
-
-        val imageView = holder.itemView.findViewById<ImageView>(R.id.imageView)
-        currentImage?.let { imageView.setImageResource(it) }
-        onItemClickListener?.let {
-            holder.itemView.setOnClickListener {
-                // position this is number in onBindViewHolder and items[position] this number in list
-                currentImage?.let { it1 -> onItemClickListener?.onItemClick(it1) }
-
-            }
-        }
+        holder.itemBinding.imageView.setImageResource(currentImage!!)
         onItemClickListener?.let {
             holder.itemView.setOnClickListener {
                 // position this is number in onBindViewHolder and items[position] this number in list
@@ -62,25 +63,30 @@ class ReadingQuranAdapter(
             }
         }
 
-
-        val bookMarkList = holder.itemView.findViewById<LottieAnimationView>(R.id.markItem)
-       if (position == itemCount) {
-           Log.d("TAG", "onItemClick: $position")
-           bookMarkList.visibility = View.VISIBLE
-           bookMarkList.setMinAndMaxProgress(0.5f, 1.0f)
-           bookMarkList.playAnimation()
-           val filter = SimpleColorFilter(Color.parseColor("#FF0000"))
-           val keyPath = KeyPath("**")
-           val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
-           bookMarkList.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
-       }
-
-
+        listSavedPage?.forEach {
+            if (it.pageNumber == position) {
+                holder.itemBinding.markItem.visibility = View.VISIBLE
+                holder.itemBinding.markItem.playAnimation()
+                val colorFilter = SimpleColorFilter(Color.parseColor("#FF0000"))
+                val keyPath = KeyPath("**")
+                val callback = LottieValueCallback<ColorFilter>(colorFilter)
+                holder.itemBinding.markItem.addValueCallback(
+                    keyPath,
+                    LottieProperty.COLOR_FILTER,
+                    callback
+                )
+            }
+        }
 
     }
+
     var onItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+    }
+    fun changeListBookMark(list: List<SavedPage>){
+        listSavedPage=list
+        notifyDataSetChanged()
     }
 }

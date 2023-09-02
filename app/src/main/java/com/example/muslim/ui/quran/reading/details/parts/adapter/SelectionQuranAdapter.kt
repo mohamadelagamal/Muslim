@@ -1,18 +1,16 @@
-package com.example.muslim.ui.quran.juzz.adapter
+package com.example.muslim.ui.quran.reading.details.parts.adapter
 
 import android.content.Context
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muslim.R
 import com.example.muslim.databinding.ItemsSurahBinding
-import com.example.muslim.model.quran.SurahInfoItem
-import java.security.AccessController.getContext
+import com.example.muslim.database.quran.SurahInfoItem
 
 
-class SelectionQuranAdapter(val list:List<SurahInfoItem?>?=null,val mycontext: Context):RecyclerView.Adapter<SelectionQuranAdapter.ViewHolder>() {
+class SelectionQuranAdapter(val list:List<SurahInfoItem?>?=null, val mycontext: Context):RecyclerView.Adapter<SelectionQuranAdapter.ViewHolder>() {
     // view holder
     class ViewHolder(val itemJuzz:ItemsSurahBinding):RecyclerView.ViewHolder(itemJuzz.root){
         fun bind(item: SurahInfoItem?){

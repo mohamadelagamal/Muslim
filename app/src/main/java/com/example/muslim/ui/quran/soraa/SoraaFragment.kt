@@ -6,7 +6,7 @@ import android.view.View
 import com.example.muslim.R
 import com.example.muslim.databinding.FragmentSoraaBinding
 import com.example.muslim.extension.Constant
-import com.example.muslim.model.quran.SurahInfoItem
+import com.example.muslim.database.quran.SurahInfoItem
 import com.example.muslim.ui.base.fragment.BaseFragment
 import com.example.muslim.ui.quran.reading.ReadingQuranActivity
 import com.example.muslim.ui.quran.soraa.adapter.SurahAdapters

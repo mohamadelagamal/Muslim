@@ -1,4 +1,4 @@
-package com.example.muslim.model.quran
+package com.example.muslim.database.quran
 
 data class Juz(
     val index: String,
