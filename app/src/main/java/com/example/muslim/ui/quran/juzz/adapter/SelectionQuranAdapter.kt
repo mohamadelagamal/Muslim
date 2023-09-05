@@ -1,4 +1,4 @@
-package com.example.muslim.ui.quran.reading.details.parts.adapter
+package com.example.muslim.ui.quran.juzz.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -31,9 +31,15 @@ class SelectionQuranAdapter(val list:List<SurahInfoItem?>?=null, val mycontext: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item= list?.get(position)
         holder.bind(item)
-
         holder.itemJuzz.totalVerse.text="from :${list?.get(position)?.count.toString().trimStart('0')}"
         holder.itemJuzz.place.text= "to :${list?.get(position)?.place}"
+        onItemClickInterface.let {
+            holder.itemView.setOnClickListener { item?.place.let { onItemClickInterface?.onItemClick(item?.place!!) } }
+        }
+    }
+    var onItemClickInterface: OnItemClickInterface?=null
+    interface OnItemClickInterface{
+        fun onItemClick(position: String)
     }
 }
 

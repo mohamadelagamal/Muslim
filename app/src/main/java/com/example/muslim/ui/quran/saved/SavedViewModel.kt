@@ -18,7 +18,6 @@ class SavedViewModel:BaseViewModel<Navigator>() {
         val savedPageDao = QuranDataBase.getInstance(context).savedPageDao()
         val savedPage = savedPageDao.getAllQuran()
         quranLiveData.value = savedPage
-
     }
 
 }

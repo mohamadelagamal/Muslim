@@ -29,6 +29,16 @@ class SavedPageFragmentAdapter(var items: List<SavedPage?>?) : RecyclerView.Adap
         item?.let { holder.bind(it) }
         holder.itemBinding.pageNumberBookMarkActivity.text = "page: ${item!!.pageNumber + 1}"
         holder.itemBinding.counterNumberTv.text = "${pageNumber}"
+        // click item
+        onItemClickInterface.let {
+            holder.itemView.setOnClickListener { item.pageNumber.let { onItemClickInterface?.onItemClick(item.pageNumber) } }
+        }
+        onItemLongClick?.let {
+            holder.itemView.setOnLongClickListener {
+                items!![position]?.let { it1 -> onItemLongClick?.onItemClickLong(position, it1) }
+                true
+            }
+            }
 
     }
 
@@ -39,5 +49,17 @@ class SavedPageFragmentAdapter(var items: List<SavedPage?>?) : RecyclerView.Adap
             list.add(i)
         }
         return list
+    }
+    var onItemClickInterface:OnItemClickInterface?=null
+    interface OnItemClickInterface{
+        fun onItemClick(position: Int)
+    }
+    var onItemLongClick : setOnLongClickListener?=null
+    interface setOnLongClickListener {
+        fun onItemClickLong(pos: Int , item: SavedPage)
+    }
+    fun changData(savedPage: List<SavedPage>) {
+        items = savedPage
+        notifyDataSetChanged()
     }
 }

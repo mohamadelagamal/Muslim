@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.muslim.database.bookmark.SavedPage
-import com.example.muslim.database.bookmark.dao.SavedPageDao
+import com.example.muslim.database.bookmark.dao.saved.SavedPageDao
 
 @Database(entities=[SavedPage::class], version=1, exportSchema = false)
 abstract class QuranDataBase :RoomDatabase(){

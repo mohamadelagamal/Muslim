@@ -1,4 +1,4 @@
-package com.example.muslim.database.bookmark.dao
+package com.example.muslim.database.bookmark.dao.saved
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

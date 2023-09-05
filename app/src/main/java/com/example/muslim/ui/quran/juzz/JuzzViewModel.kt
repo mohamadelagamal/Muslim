@@ -1,4 +1,4 @@
-package com.example.muslim.ui.quran.reading.details.parts
+package com.example.muslim.ui.quran.juzz
 
 import com.example.muslim.ui.base.activity.BaseViewModel
 

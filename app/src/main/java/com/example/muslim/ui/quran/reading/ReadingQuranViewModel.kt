@@ -34,7 +34,7 @@ class ReadingQuranViewModel(): BaseViewModel<Navigator>() {
 
     // move to parts screen
     fun clickOnParts(){
-        navigator?.openParts()
+       // navigator?.openParts()
     }
     fun clickReadingQuran(){
         navigator?.openReadingQuran()

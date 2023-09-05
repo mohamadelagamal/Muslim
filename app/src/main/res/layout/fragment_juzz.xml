@@ -7,13 +7,13 @@
 
             <variable
                 name="item"
-                type="com.example.muslim.ui.quran.reading.details.parts.JuzzViewModel" />
+                type="com.example.muslim.ui.quran.juzz.JuzzViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.quran.reading.details.parts.JuzzFragment">
+        tools:context=".ui.quran.juzz.JuzzFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

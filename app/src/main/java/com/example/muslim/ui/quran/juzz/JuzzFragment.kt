@@ -1,12 +1,16 @@
-package com.example.muslim.ui.quran.reading.details.parts
+package com.example.muslim.ui.quran.juzz
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.muslim.R
 import com.example.muslim.databinding.FragmentJuzzBinding
 import com.example.muslim.database.quran.SurahInfoItem
+import com.example.muslim.extension.Constant
 import com.example.muslim.ui.base.fragment.BaseFragment
-import com.example.muslim.ui.quran.reading.details.parts.adapter.SelectionQuranAdapter
+import com.example.muslim.ui.quran.reading.ReadingQuranActivity
+import com.example.muslim.ui.quran.juzz.adapter.SelectionQuranAdapter
 
 class JuzzFragment : BaseFragment<FragmentJuzzBinding, JuzzViewModel>(), Navigator {
 
@@ -57,6 +61,21 @@ class JuzzFragment : BaseFragment<FragmentJuzzBinding, JuzzViewModel>(), Navigat
     private fun init() {
         adapter= SelectionQuranAdapter(list,requireContext())
         viewDataBinding.fragJuzzRv.adapter=adapter
-    }
+        adapter.onItemClickInterface= object : SelectionQuranAdapter.OnItemClickInterface{
+            override fun onItemClick(position: String) {
+                Log.e("Juzz",position)
+          //      clickItemBookMark(position)
+                val intent = Intent(requireContext(),ReadingQuranActivity::class.java)
+                intent.putExtra(Constant.SURA_ID,SurahInfoItem(index = position.toString()))
+                Log.e("Juzz", SurahInfoItem(index = position).toString())
+                startActivity(intent)
+            }
+        }
 
+    }
+    fun clickItemBookMark(position: String){
+        val intent = Intent(requireContext(), ReadingQuranActivity::class.java)
+        intent.putExtra(Constant.SURA_ID,SurahInfoItem(index = position))
+        startActivity(intent)
+    }
 }

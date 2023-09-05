@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.muslim.databinding.FragmentQuranBinding
 import com.example.muslim.ui.quran.adapter.QuranHomeAdapter
-import com.example.muslim.ui.quran.reading.details.parts.JuzzFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 
