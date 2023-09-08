@@ -4,6 +4,7 @@
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/color_light</item>
         <item name="colorPrimaryDark">@color/color_light</item>
+        <item name="colorAccent">@color/read</item>
     </style>
 
     <style name="Theme.Muslim" parent="Base.Theme.Muslim" />

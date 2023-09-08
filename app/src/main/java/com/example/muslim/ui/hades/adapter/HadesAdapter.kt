@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muslim.R
-import com.example.muslim.model.hadith.HadithDataBase
+import com.example.muslim.database.hadith.HadithDataBase
 import com.example.muslim.databinding.ItemHadesBinding
 
 class HadesAdapter(var items:List<HadithDataBase>?):RecyclerView.Adapter<HadesAdapter.HadesViewHolder>(){

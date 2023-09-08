@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.muslim.model.ziker.ZikerNames" />
+            type="com.example.muslim.database.ziker.ZikerNames" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

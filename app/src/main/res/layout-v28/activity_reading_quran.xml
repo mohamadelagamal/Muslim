@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vmQuranReading"
+            type="com.example.muslim.ui.quran.reading.ReadingQuranViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent_reading_quran"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_container"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/quran_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/seekBar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_background_quran"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            android:weightSum="1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/page_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="1dp"
+                android:fontFamily="@font/al_qalam"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="25" />
+
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:thumbTint="@color/color_light"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_constraint_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent=".18"
+            android:background="@drawable/text_frag_quran_page_frame"
+            android:padding="3sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bookMark_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/medium"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="add  "
+                android:textAllCaps="false"
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@+id/fragQuran_Juzz"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/guideline"
+                app:layout_constraintGuide_percent="0.7"
+                android:orientation="vertical"
+                />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/savedLottie"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintWidth_percent="0.06"
+                app:lottie_rawRes="@raw/bookmark"
+                android:outlineAmbientShadowColor="@color/read"
+                android:outlineSpotShadowColor="@color/read"
+
+                android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragQuran_Juzz"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/me_quran"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="search"
+                android:textAllCaps="false"
+                app:icon="@drawable/baseline_search_24"
+                app:iconGravity="textStart"
+                android:onClick="@{()->vmQuranReading.clickSearch()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragQuran_Soraa"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/medium"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="reading"
+                android:textAllCaps="false"
+                android:onClick="@{()->vmQuranReading.clickReadingQuran()}"
+                app:icon="@drawable/baseline_library_books_24"
+                app:iconGravity="textStart"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragQuran_Saved"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragQuran_Saved"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/medium"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="parts"
+                android:onClick="@{()->vmQuranReading.clickOnParts()}"
+                android:textAllCaps="false"
+                app:icon="@drawable/baseline_drag_indicator_24"
+                app:iconGravity="textStart"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/share_quran_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/medium"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="share"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:iconGravity="textStart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.34"
+                app:layout_constraintWidth_percent="0.5" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/shareLottie"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintWidth_percent="0.06"
+                app:lottie_rawRes="@raw/share"
+                android:outlineAmbientShadowColor="@color/read"
+                android:outlineSpotShadowColor="@color/read"
+
+                android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toBottomOf="@id/bookMark_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragQuran_adding"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/medium"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="about"
+                android:textAllCaps="false"
+                android:onClick="@{()->vmQuranReading.clickAbout()}"
+                android:textColor="@color/white"
+                app:icon="@drawable/baseline_groups_24"
+                app:iconGravity="textStart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent="0.34"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/fragQuran_Juzz"
+                tools:layout_editor_absoluteX="4dp" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/bookMark_button"
+                tools:layout_editor_absoluteX="4dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

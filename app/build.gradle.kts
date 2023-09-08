@@ -5,6 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     // navigation safe args plugin
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
+    //kapt plugin
+    id("kotlin-kapt")
 }
 
 android {
@@ -33,11 +36,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         //noinspection DataBindingWithoutKapt
@@ -78,6 +81,12 @@ dependencies {
     // coroutines dependencies here
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
+    // room dependencies here to use room database
+    implementation("androidx.room:room-runtime:2.3.0")
+    kapt("androidx.room:room-compiler:2.3.0")
+    implementation("androidx.room:room-ktx:2.3.0")
+
 
 
 

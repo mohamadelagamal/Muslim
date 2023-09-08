@@ -10,8 +10,4 @@
     <color name="divider">#eeeeee</color>
     <color name="shimmer">#DDDDDD</color>
     <color name="gray_with_obasity">#F5979797</color>
-    <color name="card_zekr_color">#FBF3EE</color>
-    <color name="grey_view_sadka">#D8D8D8</color>
-    <color name="grey_zekr_id">#777777</color>
-    <color name="blue_button_count">#42A5FF</color>
 </resources>

@@ -1,5 +1,9 @@
-package com.example.muslim.model.quran
+package com.example.muslim.database.quran
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class SurahInfoItem(
     val count: Int? = null,
     val index: String? = null,
@@ -9,4 +13,9 @@ data class SurahInfoItem(
     val title: String? = null,
     val titleAr: String? = null,
     val type: String? = null
-)
+) : Parcelable {
+    @Parcelize
+    data class Juz(
+        val index: String? = null,
+        val title: String? = null
+    ) : Parcelable}

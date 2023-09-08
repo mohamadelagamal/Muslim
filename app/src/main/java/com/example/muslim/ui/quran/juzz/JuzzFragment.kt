@@ -1,17 +1,18 @@
 package com.example.muslim.ui.quran.juzz
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import com.example.muslim.R
 import com.example.muslim.databinding.FragmentJuzzBinding
-import com.example.muslim.model.quran.SurahInfoItem
+import com.example.muslim.database.quran.SurahInfoItem
+import com.example.muslim.extension.Constant
 import com.example.muslim.ui.base.fragment.BaseFragment
+import com.example.muslim.ui.quran.reading.ReadingQuranActivity
 import com.example.muslim.ui.quran.juzz.adapter.SelectionQuranAdapter
 
-class JuzzFragment : BaseFragment<FragmentJuzzBinding,JuzzViewModel>(),Navigator {
+class JuzzFragment : BaseFragment<FragmentJuzzBinding, JuzzViewModel>(), Navigator {
 
     val list = listOf<SurahInfoItem>(
         SurahInfoItem(index = "1", titleAr = "الجزء 1", title = "selection one",type = "pages", count = 1, place = "21"),
@@ -54,14 +55,27 @@ class JuzzFragment : BaseFragment<FragmentJuzzBinding,JuzzViewModel>(),Navigator
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.item=viewModel
         viewModel.navigator=this
-
-
         init()
     }
 
     private fun init() {
         adapter= SelectionQuranAdapter(list,requireContext())
         viewDataBinding.fragJuzzRv.adapter=adapter
-    }
+        adapter.onItemClickInterface= object : SelectionQuranAdapter.OnItemClickInterface{
+            override fun onItemClick(position: String) {
+                Log.e("Juzz",position)
+          //      clickItemBookMark(position)
+                val intent = Intent(requireContext(),ReadingQuranActivity::class.java)
+                intent.putExtra(Constant.SURA_ID,SurahInfoItem(index = position.toString()))
+                Log.e("Juzz", SurahInfoItem(index = position).toString())
+                startActivity(intent)
+            }
+        }
 
+    }
+    fun clickItemBookMark(position: String){
+        val intent = Intent(requireContext(), ReadingQuranActivity::class.java)
+        intent.putExtra(Constant.SURA_ID,SurahInfoItem(index = position))
+        startActivity(intent)
+    }
 }

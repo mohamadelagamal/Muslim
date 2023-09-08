@@ -3,7 +3,7 @@ package com.example.muslim.ui.hades
 import android.os.Bundle
 import android.view.View
 import com.example.muslim.R
-import com.example.muslim.model.hadith.HadithDataBase
+import com.example.muslim.database.hadith.HadithDataBase
 import com.example.muslim.databinding.FragmentHadesBinding
 import com.example.muslim.ui.base.fragment.BaseFragment
 import com.example.muslim.ui.hades.adapter.HadesAdapter

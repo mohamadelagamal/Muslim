@@ -1,4 +1,4 @@
-package com.example.muslim.model.hadith
+package com.example.muslim.database.hadith
 
 data class HadithDataBase(
     val title:String?=null,

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 
-open class BaseViewModel<N>: ViewModel(){
+abstract class BaseViewModel<N>: ViewModel(){
     var navigator:N?=null
     val showLoading = MutableLiveData<Boolean>()
     val messageLiveData = MutableLiveData<String>()
