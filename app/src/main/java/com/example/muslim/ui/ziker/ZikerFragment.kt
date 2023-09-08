@@ -1,18 +1,22 @@
 package com.example.muslim.ui.ziker
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.SyncStateContract
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.muslim.R
 import com.example.muslim.databinding.FragmentZikerBinding
+import com.example.muslim.extension.Constant
 import com.example.muslim.model.ziker.ZikerNames
 import com.example.muslim.ui.base.fragment.BaseFragment
 import com.example.muslim.ui.ziker.namesAdapter.NamesAdapter
+import com.example.muslim.ui.ziker.zikerContent.ZikerContentActivity
 
 class ZikerFragment : BaseFragment<FragmentZikerBinding,ZikerViewModel>() , Navigator{
-
     override fun getLayoutID(): Int {
         return R.layout.fragment_ziker
     }
@@ -27,22 +31,37 @@ class ZikerFragment : BaseFragment<FragmentZikerBinding,ZikerViewModel>() , Navi
         init()
 
     }
-    val names_ziker= mutableListOf(
-      ZikerNames(1,"أذكار الصباح",R.drawable.sun,"أذكار الصباح"),
-      ZikerNames(133,"أذكار المساء",R.drawable.night,"أذكار المساء"),
-      ZikerNames(3,"أذكار الاستيقاظ من النوم",R.drawable.wakeup,"أذكار الأستيقاظ"),
-      ZikerNames(2,"أذكار النوم",R.drawable.sleep,"أذكار النوم"),
-      ZikerNames(10,"دعاء الذهاب إلى المسجد",R.drawable.mosque,"أذكار المسجد"),
-      ZikerNames(9,"الذكر عند دخول المنزل",R.drawable.home,"أذكار المنزل"),
-      ZikerNames(6,"الذكر قبل الوضوء",R.drawable.wudhu,"أذكار الوضوء"),
-      ZikerNames(27,"الأذكار بعد السلام من الصلاة",R.drawable.praying,"أذكار بعد الصلاة"),
-      ZikerNames(115,"كيف يلبي المحرم في الحج أو العمرة ؟",R.drawable.hajj,"الحج والعمرة"),
-      ZikerNames(69,"الدعاء قبل الطعام",R.drawable.restaurant,"الطعام"),
-      ZikerNames(13,"أذكار الآذان",R.drawable.adzan,"الأذان")
-    )
-     var adapter= NamesAdapter(names_ziker)
+
+     var adapter= NamesAdapter(null)
     fun init(){
         viewDataBinding.recyclerZekrNames.adapter=adapter
+        try {
+            val fileName = "azkar.json"
+            viewModel.loadZikerList(fileName,requireActivity())
+            Log.e("data", "init: ${viewModel.zikerContent.value}")
+        } catch (e: Exception) {
+            Log.d("data", "init: ${e.message}")
+        }
+        try {
+            viewModel.zikerContent.observe(viewLifecycleOwner){
+                adapter.changeData(it)
+            }
+        } catch (e: Exception) {
+            Log.e("data", "init: ${e.message}")
+        }
+
+        viewModel.gotoContnet()
+    }
+
+    override fun openContent() {
+        adapter.onItemClickListener=object :NamesAdapter.OnItemClickListener{
+            override fun onClick(pos: Int, item: ZikerNames) {
+               val intent=Intent(requireContext(),ZikerContentActivity::class.java)
+                //intent.putExtra(Constant.Extra_Ziker_pos,pos)
+                intent.putExtra(Constant.Extra_Ziker_cate,item)
+                startActivity(intent)
+            }
+        }
     }
 
 }

@@ -11,7 +11,11 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Muslim"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.ziker.zikerContent.ZikerContentActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.quran.reading.ReadingQuranActivity"
             android:exported="false" />

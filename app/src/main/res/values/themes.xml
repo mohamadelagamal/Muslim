@@ -21,7 +21,5 @@
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:padding">4sp</item>
         <item name="android:textStyle">bold</item>
-
-
     </style>
 </resources>

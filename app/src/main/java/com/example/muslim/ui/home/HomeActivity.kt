@@ -54,6 +54,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(),Navigato
                     transactFragment(RadioFragment())
                 }
                 R.id.zikrNav -> {
+
                     transactFragment(ZikerFragment())
                 }
             }
