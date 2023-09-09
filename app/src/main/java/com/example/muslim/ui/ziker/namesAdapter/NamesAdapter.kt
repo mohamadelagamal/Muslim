@@ -9,7 +9,7 @@ import com.example.muslim.R
 import com.example.muslim.databinding.ItemZekrNameBinding
 import com.example.muslim.database.ziker.ZikerNames
 
-class NamesAdapter(val list:List<ZikerNames>):Adapter<NamesAdapter.viewHolder>() {
+class NamesAdapter(var list:List<ZikerNames>?):Adapter<NamesAdapter.viewHolder>() {
 
     class viewHolder(val itemBinding: ItemZekrNameBinding) : ViewHolder(itemBinding.root) {
         fun bind(item: ZikerNames){
@@ -24,11 +24,22 @@ class NamesAdapter(val list:List<ZikerNames>):Adapter<NamesAdapter.viewHolder>()
         return viewHolder(viewBinding)
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = list?.size ?: 0
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-                val item=list[position]
+                val item=list!![position]
         holder.bind(item)
-        holder.itemBinding.imageZekr.setImageResource(item.image!!)
+        holder.itemBinding.imageZekr.setImageResource(item.image!!.toInt())
+        holder.itemBinding.root.setOnClickListener {
+            onItemClickListener?.onClick(position,item)
+        }
     }
+    fun changeData(newList: List<ZikerNames>?){
+        list=newList
+        notifyDataSetChanged()
+    }
+    interface OnItemClickListener{
+        fun onClick(pos:Int,item:ZikerNames)
+    }
+    var onItemClickListener:OnItemClickListener?=null
 }

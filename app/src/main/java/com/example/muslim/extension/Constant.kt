@@ -11,5 +11,6 @@ object Constant {
     const val PAGES_NUMBER = 604
     const val SURA_ID = "sura_id"
     const val SAVED_PAGE_MODEL = "saved_page_model"
+    const val Extra_Ziker_cate = "category"
 
 }

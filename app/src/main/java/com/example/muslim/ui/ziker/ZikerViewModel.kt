@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.muslim.R
-import com.example.muslim.model.ziker.ZikerNames
+import com.example.muslim.database.ziker.ZikerNames
 import com.example.muslim.ui.base.activity.BaseViewModel
 import com.google.gson.Gson
 import com.google.gson.JsonArray
